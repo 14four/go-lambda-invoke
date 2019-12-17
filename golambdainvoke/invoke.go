@@ -14,6 +14,7 @@ import (
 const functioninvokeRPC = "Function.Invoke"
 
 type Input = struct {
+	Host string
 	Port int
 	Payload interface{}
 	ClientContext *lc.ClientContext
@@ -30,7 +31,7 @@ func Run(input Input) ([]byte, error) {
 	}
 
 	// 2. Open a TCP connection to the lambda
-	client, err := rpc.Dial("tcp", fmt.Sprintf(":%d", input.Port))
+	client, err := rpc.Dial("tcp", fmt.Sprintf("%s:%d", input.Host, input.Port))
 	if err != nil {
 		return nil, err
 	}
